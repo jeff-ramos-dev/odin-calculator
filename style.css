@@ -2,19 +2,50 @@
     box-sizing: border-box;
 }
 
+body {
+    margin: 0 auto;
+    padding: 0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 header {
     display: grid;
     place-items: center;
+    font-size: 2.5rem;
 }
-
+h1 {
+    margin: 1.5rem;
+    padding: 0
+}
 main {
     display: grid;
     place-items: center;
 }
 
 button {
-    height: 3rem;
+    height: 3.5rem;
     flex: 1; 
+    font-size: 1.5rem;
+    background-color: #daae1e;
+    border-radius: 10px;
+    border: 2px solid #7a5e03;
+    transition: background-color 300ms ease-out;
+}
+
+.ac, .c, .posNeg {
+    background-color:#2f4f4f;
+    border: 2px solid #4f6f6f;
+    color: #ddd;
+}
+
+.divide,
+.multiply,
+.subtract,
+.add,
+.equal {
+    background-color: #666;
+    color: white;
+    border: 2px solid #999;
 }
 
 .calculator {
@@ -23,14 +54,14 @@ button {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #4d4d4d
+    background-color: #313131;
 }
 
 .displays {
     display: grid;
     grid-template-rows: 1fr 2fr;
     width: 90%;
-    padding: 2rem;
+    padding: 1.5rem;
 }
 
 .runningTotalDisplay {
@@ -38,6 +69,9 @@ button {
     height: 2rem;
     background: grey;
     place-self: end;
+    text-align: right;
+    font-size: 1.5rem;
+    padding: 0.1rem 0.5rem;
 }
 
 .mainDisplay {
@@ -45,6 +79,9 @@ button {
     height: 4rem;
     background: darkgrey;
     margin-top: 1rem;
+    text-align: right;
+    padding: 0.6rem 0.5rem 0 0.5rem;
+    font-size: 2.75rem;
 }
 
 .buttons {
@@ -52,9 +89,15 @@ button {
     width: 90%;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(5, 1fr);
-    gap: 2rem;
-    padding: 2rem;
+    gap: 1.5rem;
+    padding: 1.5rem;
 }
+
+button:active {
+    background-color: #614d0e;
+    transition: background-color 50ms;
+}
+
 
 .zero {
     grid-column-start: span 2;
