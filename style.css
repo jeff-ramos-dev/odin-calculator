@@ -32,7 +32,7 @@ button {
     transition: background-color 300ms ease-out;
 }
 
-.ac, .c, .posNeg {
+.ac, .c, .pos-meg {
     background-color:#2f4f4f;
     border: 2px solid #4f6f6f;
     color: #ddd;
