@@ -42,7 +42,7 @@ clearBtn.addEventListener('click', () => {
 
 equalBtn.addEventListener('click', () => {
     if (calc.get("savedOperation")) {
-        calc.set("displayValue", String(operate(calc.get("savedOperation"), Number(calc.get("displayValue")), Number(calc.get("runningTotal")))))
+        calc.set("displayValue", String(operate(calc.get("savedOperation"), Number(calc.get("runningTotal")), Number(calc.get("displayValue")))))
         calc.set("runningTotal", calc.get("displayValue"))
     }
     updateDisplays()
@@ -116,20 +116,33 @@ function createNumberEventListeners() {
 function createOperationEventListeners() {
     for (let i = 0; i < 4; i++) {
         operationBtns[i].addEventListener('click', (e) => {
-            if (calc.get("savedOperation")) {
-                operate(calc.get("savedOperation"), calc.get("runningTotal"), calc.get("displayValue"))
+            if (!calc.get("operationPressed")) {
+
+                if (calc.get("savedOperation")) {
+                    operate(calc.get("savedOperation"), calc.get("runningTotal"), calc.get("displayValue"))
+                } else {
+                    calc.set("runningTotal", calc.get("displayValue"))
+                    updateDisplays()
+                }
+                if (e.target.classList.contains('add')) {
+                    calc.set("savedOperation", 'add')
+                } else if (e.target.classList.contains('subtract')) {
+                    calc.set("savedOperation", 'subract')
+                } else if (e.target.classList.contains('multiply')) {
+                    calc.set("savedOperation", 'multiply')
+                } else if (e.target.classList.contains('divide')) {
+                    calc.set("savedOperation", 'divide')
+                }
             } else {
-                calc.set("runningTotal", calc.get("displayValue"))
-                updateDisplays()
-            }
-            if (e.target.classList.contains('add')) {
-                calc.set("savedOperation", 'add')
-            } else if (e.target.classList.contains('subtract')) {
-                calc.set("savedOperation", 'subract')
-            } else if (e.target.classList.contains('multiply')) {
-                calc.set("savedOperation", 'multiply')
-            } else if (e.target.classList.contains('divide')) {
-                calc.set("savedOperation", 'divide')
+                if (e.target.classList.contains('add')) {
+                    calc.set("savedOperation", 'add')
+                } else if (e.target.classList.contains('subtract')) {
+                    calc.set("savedOperation", 'subtract')
+                } else if (e.target.classList.contains('multiply')) {
+                    calc.set("savedOperation", 'multiply')
+                } else if (e.target.classList.contains('divide')) {
+                    calc.set("savedOperation", 'divide')
+                }
             }
             calc.set("operationPressed", true)
             calc.set("posNegPressed", false)
