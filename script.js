@@ -20,24 +20,28 @@ const nineBtn = document.querySelector('.nine')
 const numberBtns = Array.from(document.querySelectorAll('.number'))
 const operationBtns = Array.from(document.querySelectorAll('.operation'))
 const maxDecimalLength = 8
-
 const runningTotalDisplay = document.querySelector('.running-total-display')
 const mainDisplay = document.querySelector('.main-display')
 
 let calc = new Map()
+
 setCalcDefault()
+
 createNumberEventListeners()
+
 createOperationEventListeners()
 
 allClearBtn.addEventListener('click', () => {
     setCalcDefault()
     updateDisplays()
+    console.log("ALL CLEARED")
 })
 
 clearBtn.addEventListener('click', () => {
     calc.set("displayValue", "0")
-    calc.set("equalsPressed")
+    calc.set("equalsPressed", false)
     updateDisplays()
+    console.log("CLEARED")
 })
 
 equalBtn.addEventListener('click', () => {
@@ -45,7 +49,9 @@ equalBtn.addEventListener('click', () => {
         calc.set("displayValue", String(operate(calc.get("savedOperation"), Number(calc.get("runningTotal")), Number(calc.get("displayValue")))))
         calc.set("runningTotal", calc.get("displayValue"))
     }
+    calc.set("equalsPressed", true)
     updateDisplays()
+    console.log("EQUALS PRESSED")
 })
 
 decimalBtn.addEventListener('click', () => {
@@ -58,6 +64,7 @@ decimalBtn.addEventListener('click', () => {
         }
     }
     updateDisplays()
+    console.log("DECIMAL PRESSED")
 })
 
 posNegBtn.addEventListener('click', () => {
@@ -73,6 +80,7 @@ posNegBtn.addEventListener('click', () => {
             calc.set("posNegPressed", false)
         }
     }
+    console.log("POSNEG PRESSED")
 })
 
 function setCalcDefault() {
@@ -103,12 +111,16 @@ function createNumberEventListeners() {
                     calc.set("displayValue", String((Number(e.target.textContent) * -1)))
                 } else if (calc.get("decimalPressed")) {
                     calc.set("displayValue", calc.get("displayValue") + e.target.textContent)
+                } else if (calc.get("displayValue") === "0") {
+                    calc.set("displayValue", e.target.textContent)
                 } else {
                     calc.set("displayValue", calc.get("displayValue") + e.target.textContent)
                 }
             }
             calc.set("operationPressed", false)
             updateDisplays()
+            console.log("NUMBER PRESSED")
+            calc.forEach((key, value) => console.log(`${value}, ${key}`))
         })
     }
 }
@@ -118,8 +130,9 @@ function createOperationEventListeners() {
         operationBtns[i].addEventListener('click', (e) => {
             if (!calc.get("operationPressed")) {
 
-                if (calc.get("savedOperation")) {
-                    operate(calc.get("savedOperation"), calc.get("runningTotal"), calc.get("displayValue"))
+                if (calc.get("savedOperation") && !calc.get("equalsPressed")) {
+                    calc.set("runningTotal", operate(calc.get("savedOperation"), Number(calc.get("runningTotal")), Number(calc.get("displayValue"))))
+                    updateDisplays()
                 } else {
                     calc.set("runningTotal", calc.get("displayValue"))
                     updateDisplays()
@@ -127,7 +140,7 @@ function createOperationEventListeners() {
                 if (e.target.classList.contains('add')) {
                     calc.set("savedOperation", 'add')
                 } else if (e.target.classList.contains('subtract')) {
-                    calc.set("savedOperation", 'subract')
+                    calc.set("savedOperation", 'subtract')
                 } else if (e.target.classList.contains('multiply')) {
                     calc.set("savedOperation", 'multiply')
                 } else if (e.target.classList.contains('divide')) {
@@ -146,6 +159,8 @@ function createOperationEventListeners() {
             }
             calc.set("operationPressed", true)
             calc.set("posNegPressed", false)
+            console.log("OPERATION PRESSED")
+            calc.forEach((key, value) => console.log(`${value}, ${key}`))
         })
     }
 }
@@ -166,6 +181,10 @@ function divide(x, y) {
     return x / y
 }
 
+function round(num, precision) {
+    return Number(Math.round(num + "e+" + precision) + "e-" + precision)
+}
+
 function operate(operator, x, y) {
     let output = 0
     switch(operator) {
@@ -183,9 +202,6 @@ function updateDisplays() {
     runningTotalDisplay.textContent = calc.get("runningTotal")
 }
 
-function round(num, precision) {
-    return Number(Math.round(num + "e+" + precision) + "e-" + precision)
-}
 
 module.exports = {
     add,
@@ -225,10 +241,10 @@ module.exports = {
 // 12 + 0.3 = 12.3 PASSES 
 
 // Operations pressed in succession update the saved operation
-// 12 +-x/- 3 = 9 FAILS
+// 12 +-x/- 3 = 9 PASSES 
 
 // Multiple operations done before equals displays and updates properly
-// 1 - 2 + 3 = 2 FAILS
+// 1 - 2 + 3 = 2 PASSES 
 
 // Operations done after equals keep the running total and update the display properly
 // 1 + 2 = (3) + 5 = 8 PASSES 
