@@ -39,6 +39,9 @@ allClearBtn.addEventListener('click', () => {
 
 clearBtn.addEventListener('click', () => {
     calc.set("displayValue", "0")
+    if (calc.get("equalsPressed")) {
+        calc.set("runningTotal", 0)
+    }
     calc.set("equalsPressed", false)
     updateDisplays()
     console.log("CLEARED")
@@ -106,6 +109,7 @@ function createNumberEventListeners() {
                         calc.set("displayValue", String(Number(e.target.textContent) * -1))
                     } else {
                         calc.set("displayValue", e.target.textContent)
+                        calc.set("decimalPressed", false)
                     }
                 } else if (calc.get("posNegPressed")) {
                     calc.set("displayValue", String((Number(e.target.textContent) * -1)))
@@ -121,6 +125,9 @@ function createNumberEventListeners() {
             updateDisplays()
             console.log("NUMBER PRESSED")
             calc.forEach((key, value) => console.log(`${value}, ${key}`))
+            for (let i = 0; i < 4; i++) {
+                operationBtns[i].classList.remove('active')
+            }
         })
     }
 }
@@ -161,6 +168,7 @@ function createOperationEventListeners() {
             calc.set("posNegPressed", false)
             console.log("OPERATION PRESSED")
             calc.forEach((key, value) => console.log(`${value}, ${key}`))
+            e.target.classList.add('active')
         })
     }
 }

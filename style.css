@@ -27,6 +27,7 @@ main {
 button {
     height: 3.5rem;
     flex: 1; 
+    color: black;
     font-size: 1.5rem;
     background-color: #daae1e;
     border-radius: 10px;
@@ -49,7 +50,7 @@ button {
 
 .calculator {
     display: flex;
-    width: 400px;
+    width: 25rem;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -93,6 +94,11 @@ button {
 }
 
 button:active {
+    background-color: #614d0e;
+    transition: background-color 50ms;
+}
+
+.active {
     background-color: #614d0e;
     transition: background-color 50ms;
 }
