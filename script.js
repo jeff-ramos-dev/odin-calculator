@@ -87,6 +87,9 @@ posNegBtn.addEventListener('click', () => {
 })
 
 function setCalcDefault() {
+    for (let i = 0; i < 4; i++) {
+        operationBtns[i].classList.remove('active')
+    }
     calc.set("decimalPressed", false)
     calc.set("savedOperation", null)
     calc.set("operationPressed", false)
