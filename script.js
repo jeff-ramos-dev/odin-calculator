@@ -129,9 +129,11 @@ function createOperationEventListeners() {
                 if (calc.get("savedOperation") && !calc.get("equalsPressed")) {
                     calc.set("runningTotal", operate(calc.get("savedOperation"), Number(calc.get("runningTotal")), Number(calc.get("displayValue"))))
                     updateDisplays()
-                } else {
+                } else if (!calc.get("equalsPressed")) {
                     calc.set("runningTotal", calc.get("displayValue"))
                     updateDisplays()
+                } else {
+                    calc.set("equalsPressed", false)
                 }
                 if (e.target.classList.contains('add')) {
                     calc.set("savedOperation", 'add')
