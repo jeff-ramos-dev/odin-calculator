@@ -99,6 +99,7 @@ function setCalcDefault() {
 function createNumberEventListeners() {
     for (let i = 0; i <= 9; i++) {
         numberBtns[i].addEventListener('click', (e) => {
+            if (calc.get("displayValue").length >= 12 && !calc.get("operationPressed")) { return }
             if (calc.get("displayValue") === "0" && calc.get("runningTotal") === 0 && !calc.get("posNegPressed")) {
                 calc.set("displayValue", e.target.textContent)
             } else {
