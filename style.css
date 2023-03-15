@@ -107,3 +107,22 @@ button:active {
 .zero {
     grid-column-start: span 2;
 }
+
+
+@media (max-width: 1000px) {
+    h1 {
+        font-size: 4rem;
+    }
+    button {
+        height: 2.5rem;
+        font-size: 1rem;
+    }
+
+    .calculator {
+        width: 20rem;
+    }
+
+    .buttons {
+        width: 18rem;
+    }
+}
