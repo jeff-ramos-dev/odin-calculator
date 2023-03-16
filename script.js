@@ -159,6 +159,9 @@ function createOperationEventListeners() {
             calc.set("posNegPressed", false)
             console.log("OPERATION PRESSED")
             calc.forEach((key, value) => console.log(`${value}, ${key}`))
+            for (let i = 0; i < 4; i++) {
+                operationBtns[i].classList.remove('active')
+            }
             e.target.classList.add('active')
         })
     }
