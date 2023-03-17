@@ -19,6 +19,7 @@ createOperationEventListeners()
 allClearBtn.addEventListener('click', () => {
     setCalcDefault()
     updateDisplays()
+    scaleFontSize()
     console.log("ALL CLEARED")
 })
 
@@ -29,6 +30,7 @@ clearBtn.addEventListener('click', () => {
     }
     calc.set("equalsPressed", false)
     updateDisplays()
+    scaleFontSize()
     console.log("CLEARED")
 })
 
@@ -39,6 +41,7 @@ equalBtn.addEventListener('click', () => {
     }
     calc.set("equalsPressed", true)
     updateDisplays()
+    scaleFontSize()
     console.log("EQUALS PRESSED")
 })
 
@@ -52,6 +55,7 @@ decimalBtn.addEventListener('click', () => {
         }
     }
     updateDisplays()
+    scaleFontSize()
     console.log("DECIMAL PRESSED")
 })
 
@@ -68,6 +72,7 @@ posNegBtn.addEventListener('click', () => {
             calc.set("posNegPressed", false)
         }
     }
+    scaleFontSize()
     console.log("POSNEG PRESSED")
 })
 
@@ -112,6 +117,7 @@ function createNumberEventListeners() {
             }
             calc.set("operationPressed", false)
             updateDisplays()
+            scaleFontSize()
             console.log("NUMBER PRESSED")
             calc.forEach((key, value) => console.log(`${value}, ${key}`))
             for (let i = 0; i < 4; i++) {
@@ -197,6 +203,16 @@ function operate(operator, x, y) {
         default: return "Invalid input"
     }
     return round(output, 8)
+}
+
+function scaleFontSize() {
+    if (mainDisplay.textContent.length > 12) {
+        mainDisplay.style.fontSize = "1.75rem"
+    } else if (mainDisplay.textContent.length > 9) {
+        mainDisplay.style.fontSize = "2.5rem"
+    } else {
+        mainDisplay.style.fontSize = "2.75rem"
+    }
 }
 
 function updateDisplays() {
