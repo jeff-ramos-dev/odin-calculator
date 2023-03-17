@@ -207,6 +207,11 @@ function operate(operator, x, y) {
         case "divide": output = divide(x, y); break;
         default: return "Invalid input"
     }
+    if (output >= 1000000000) {
+        let exponent = String(output).length - 1
+        output = String(round((output / (10 ** exponent)), 8)) + "e" + exponent
+        return output
+    }
     return round(output, 8)
 }
 
