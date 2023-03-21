@@ -110,7 +110,9 @@ function createNumberEventListeners() {
             if (calc.displayValue === "0" && calc.runningTotal === 0 && !calc.posNegPressed) {
                 calc.displayValue = e.target.textContent
             } else {
-                if (calc.operationPressed) {
+                if (calc.equalsPressed) {
+                    calc.displayValue = e.target.textContent
+                } else if (calc.operationPressed) {
                     if(calc.displayValue === "0.") {
                         calc.displayValue = calc.displayValue + e.target.textContent
                     } else if (calc.posNegPressed) {
