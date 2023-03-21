@@ -107,7 +107,11 @@ function createNumberEventListeners() {
                         calc.set("decimalPressed", false)
                     }
                 } else if (calc.get("posNegPressed")) {
-                    calc.set("displayValue", String((Number(e.target.textContent) * -1)))
+                    if (calc.get("displayValue") === "-0") {
+                        calc.set("displayValue", String((Number(e.target.textContent) * -1)))
+                    } else {
+                        calc.set("displayValue", calc.get("displayValue") + e.target.textContent)
+                    }
                 } else if (calc.get("decimalPressed")) {
                     calc.set("displayValue", calc.get("displayValue") + e.target.textContent)
                 } else if (calc.get("displayValue") === "0") {
