@@ -110,7 +110,11 @@ function createNumberEventListeners() {
                 calc.displayValue = e.target.textContent
             } else {
                 if (calc.equalsPressed) {
-                    calc.displayValue = e.target.textContent
+                    if (calc.decimalPressed) {
+                        calc.displayValue += e.target.textContent
+                    } else {
+                        calc.displayValue = e.target.textContent
+                    }
                 } else if (calc.operationPressed) {
                     if(calc.displayValue === "0.") {
                         calc.displayValue = calc.displayValue + e.target.textContent
@@ -155,7 +159,9 @@ function createOperationEventListeners() {
                     calc.runningTotal = calc.displayValue
                     updateDisplays()
                 } else {
+                    calc.runningTotal = Number(calc.displayValue)
                     calc.equalsPressed = false
+                    updateDisplays()
                 }
                 if (e.target.classList.contains('add')) {
                     calc.savedOperation = 'add'
