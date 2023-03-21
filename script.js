@@ -8,7 +8,15 @@ const operationBtns = Array.from(document.querySelectorAll('.operation'))
 const runningTotalDisplay = document.querySelector('.running-total-display')
 const mainDisplay = document.querySelector('.main-display')
 
-let calc = new Map()
+let calc = {
+    decimalPressed: false,
+    savedOperation: null,
+    operationPressed: false,
+    equalsPressed: false,
+    posNegPressed: false,
+    runningTotal: 0,
+    displayValue: "0",
+}
 
 setCalcDefault()
 
@@ -23,32 +31,32 @@ allClearBtn.addEventListener('click', () => {
 })
 
 clearBtn.addEventListener('click', () => {
-    calc.set("displayValue", "0")
-    if (calc.get("equalsPressed")) {
-        calc.set("runningTotal", 0)
+    calc.displayValue = "0"
+    if (calc.equalsPressed) {
+        calc.runningTotal = 0
     }
-    calc.set("equalsPressed", false)
+    calc.equalsPressed = false
     updateDisplays()
     scaleFontSize()
 })
 
 equalBtn.addEventListener('click', () => {
-    if (calc.get("savedOperation")) {
-        calc.set("displayValue", String(operate(calc.get("savedOperation"), Number(calc.get("runningTotal")), Number(calc.get("displayValue")))))
-        calc.set("runningTotal", calc.get("displayValue"))
+    if (calc.savedOperation) {
+        calc.displayValue = String(operate(calc.savedOperation, Number(calc.runningTotal), Number(calc.displayValue)))
+        calc.runningTotal = calc.displayValue
     }
-    calc.set("equalsPressed", true)
+    calc.equalsPressed = true
     updateDisplays()
     scaleFontSize()
 })
 
 decimalBtn.addEventListener('click', () => {
-    if (calc.get("operationPressed")) {
-        calc.set("displayValue", "0.")
+    if (calc.operationPressed) {
+        calc.displayValue = "0."
     } else {
-        if (!calc.get("decimalPressed")) {
-            calc.set("displayValue", calc.get("displayValue") + ".")
-            calc.set("decimalPressed", true)
+        if (!calc.decimalPressed) {
+            calc.displayValue = calc.displayValue + "."
+            calc.decimalPressed = true
         }
     }
     updateDisplays()
@@ -56,15 +64,15 @@ decimalBtn.addEventListener('click', () => {
 })
 
 posNegBtn.addEventListener('click', () => {
-    if (calc.get("operationPressed")) {
-        calc.set("posNegPressed", true)
+    if (calc.operationPressed) {
+        calc.posNegPressed = true
     } else {
-        if (!calc.get("posNegPressed") && !calc.get("equalsPressed")) {
-            calc.set("displayValue", "-" + calc.get("displayValue"))
-            calc.set("posNegPressed", true)
+        if (!calc.posNegPressed && !calc.equalsPressed) {
+            calc.displayValue = "-" + calc.displayValue
+            calc.posNegPressed = true
         } else {
-            calc.set("displayValue", Number(calc.get("displayValue")) * -1)
-            calc.set("posNegPressed", false)
+            calc.displayValue = Number(calc.displayValue) * -1
+            calc.posNegPressed = false
             updateDisplays()
         }
         updateDisplays()
@@ -76,46 +84,46 @@ function setCalcDefault() {
     for (let i = 0; i < 4; i++) {
         operationBtns[i].classList.remove('active')
     }
-    calc.set("decimalPressed", false)
-    calc.set("savedOperation", null)
-    calc.set("operationPressed", false)
-    calc.set("equalsPressed", false)
-    calc.set("posNegPressed", false)
-    calc.set("runningTotal", 0)
-    calc.set("displayValue", "0")
+    calc.decimalPressed = false
+    calc.savedOperation = null
+    calc.operationPressed = false
+    calc.equalsPressed = false
+    calc.posNegPressed = false
+    calc.runningTotal = 0
+    calc.displayValue = "0"
 }
 
 function createNumberEventListeners() {
     for (let i = 0; i <= 9; i++) {
         numberBtns[i].addEventListener('click', (e) => {
-            if (calc.get("displayValue").length >= 9 && !calc.get("operationPressed")) { return }
-            if (calc.get("displayValue") === "0" && calc.get("runningTotal") === 0 && !calc.get("posNegPressed")) {
-                calc.set("displayValue", e.target.textContent)
+            if (calc.displayValue.length >= 9 && !calc.operationPressed) { return }
+            if (calc.displayValue === "0" && calc.runningTotal === 0 && !calc.posNegPressed) {
+                calc.displayValue = e.target.textContent
             } else {
-                if (calc.get("operationPressed")) {
-                    if(calc.get("displayValue") === "0.") {
-                        calc.set("displayValue", calc.get("displayValue") + e.target.textContent)
-                    } else if (calc.get("posNegPressed")) {
-                        calc.set("displayValue", String(Number(e.target.textContent) * -1))
+                if (calc.operationPressed) {
+                    if(calc.displayValue === "0.") {
+                        calc.displayValue = calc.displayValue + e.target.textContent
+                    } else if (calc.posNegPressed) {
+                        calc.displayValue = String(Number(e.target.textContent) * -1)
                     } else {
-                        calc.set("displayValue", e.target.textContent)
-                        calc.set("decimalPressed", false)
+                        calc.displayValue = e.target.textContent
+                        calc.decimalPressed = false
                     }
-                } else if (calc.get("posNegPressed")) {
-                    if (calc.get("displayValue") === "-0") {
-                        calc.set("displayValue", String((Number(e.target.textContent) * -1)))
+                } else if (calc.posNegPressed) {
+                    if (calc.displayValue === "-0") {
+                        calc.displayValue = String((Number(e.target.textContent) * -1))
                     } else {
-                        calc.set("displayValue", calc.get("displayValue") + e.target.textContent)
+                        calc.displayValue = calc.displayValue + e.target.textContent
                     }
-                } else if (calc.get("decimalPressed")) {
-                    calc.set("displayValue", calc.get("displayValue") + e.target.textContent)
-                } else if (calc.get("displayValue") === "0") {
-                    calc.set("displayValue", e.target.textContent)
+                } else if (calc.decimalPressed) {
+                    calc.displayValue = calc.displayValue + e.target.textContent
+                } else if (calc.displayValue === "0") {
+                    calc.displayValue = e.target.textContent
                 } else {
-                    calc.set("displayValue", calc.get("displayValue") + e.target.textContent)
+                    calc.displayValue = calc.displayValue + e.target.textContent
                 }
             }
-            calc.set("operationPressed", false)
+            calc.operationPressed = false
             updateDisplays()
             scaleFontSize()
             for (let i = 0; i < 4; i++) {
@@ -128,39 +136,38 @@ function createNumberEventListeners() {
 function createOperationEventListeners() {
     for (let i = 0; i < 4; i++) {
         operationBtns[i].addEventListener('click', (e) => {
-            if (!calc.get("operationPressed")) {
-
-                if (calc.get("savedOperation") && !calc.get("equalsPressed")) {
-                    calc.set("runningTotal", operate(calc.get("savedOperation"), Number(calc.get("runningTotal")), Number(calc.get("displayValue"))))
+            if (!calc.operationPressed) {
+                if (calc.savedOperation && !calc.equalsPressed) {
+                    calc.runningTotal = operate(calc.savedOperation, Number(calc.runningTotal), Number(calc.displayValue))
                     updateDisplays()
-                } else if (!calc.get("equalsPressed")) {
-                    calc.set("runningTotal", calc.get("displayValue"))
+                } else if (!calc.equalsPressed) {
+                    calc.runningTotal = calc.displayValue
                     updateDisplays()
                 } else {
-                    calc.set("equalsPressed", false)
+                    calc.equalsPressed = false
                 }
                 if (e.target.classList.contains('add')) {
-                    calc.set("savedOperation", 'add')
+                    calc.savedOperation = 'add'
                 } else if (e.target.classList.contains('subtract')) {
-                    calc.set("savedOperation", 'subtract')
+                    calc.savedOperation = 'subtract'
                 } else if (e.target.classList.contains('multiply')) {
-                    calc.set("savedOperation", 'multiply')
+                    calc.savedOperation = 'multiply'
                 } else if (e.target.classList.contains('divide')) {
-                    calc.set("savedOperation", 'divide')
+                    calc.savedOperation = 'divide'
                 }
             } else {
                 if (e.target.classList.contains('add')) {
-                    calc.set("savedOperation", 'add')
+                    calc.savedOperation = 'add'
                 } else if (e.target.classList.contains('subtract')) {
-                    calc.set("savedOperation", 'subtract')
+                    calc.savedOperation = 'subtract'
                 } else if (e.target.classList.contains('multiply')) {
-                    calc.set("savedOperation", 'multiply')
+                    calc.savedOperation = 'multiply'
                 } else if (e.target.classList.contains('divide')) {
-                    calc.set("savedOperation", 'divide')
+                    calc.savedOperation = 'divide'
                 }
             }
-            calc.set("operationPressed", true)
-            calc.set("posNegPressed", false)
+            calc.operationPressed = true
+            calc.posNegPressed = false
             for (let i = 0; i < 4; i++) {
                 operationBtns[i].classList.remove('active')
             }
@@ -217,8 +224,8 @@ function scaleFontSize() {
 }
 
 function updateDisplays() {
-    mainDisplay.textContent = calc.get("displayValue")
-    runningTotalDisplay.textContent = calc.get("runningTotal")
+    mainDisplay.textContent = calc.displayValue
+    runningTotalDisplay.textContent = calc.runningTotal
 }
 
 
