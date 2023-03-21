@@ -51,12 +51,21 @@ equalBtn.addEventListener('click', () => {
 })
 
 decimalBtn.addEventListener('click', () => {
+    if (calc.equalsPressed) {
+        if (calc.displayValue.includes(".")) {
+            calc.decimalPressed = true
+        } else {
+            calc.displayValue += "."
+        }
+    }
     if (calc.operationPressed) {
         calc.displayValue = "0."
     } else {
         if (!calc.decimalPressed) {
-            calc.displayValue = calc.displayValue + "."
+            calc.displayValue  += "."
             calc.decimalPressed = true
+        } else {
+            calc.displayValue = "0."
         }
     }
     updateDisplays()
@@ -100,7 +109,9 @@ function createNumberEventListeners() {
             if (calc.displayValue === "0" && calc.runningTotal === 0 && !calc.posNegPressed) {
                 calc.displayValue = e.target.textContent
             } else {
-                if (calc.operationPressed) {
+                if (calc.equalsPressed) {
+                    calc.displayValue = e.target.textContent
+                } else if (calc.operationPressed) {
                     if(calc.displayValue === "0.") {
                         calc.displayValue = calc.displayValue + e.target.textContent
                     } else if (calc.posNegPressed) {
