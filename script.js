@@ -161,7 +161,6 @@ function createOperationEventListeners() {
             }
             calc.set("operationPressed", true)
             calc.set("posNegPressed", false)
-            console.log("OPERATION PRESSED")
             for (let i = 0; i < 4; i++) {
                 operationBtns[i].classList.remove('active')
             }
