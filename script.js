@@ -51,12 +51,22 @@ equalBtn.addEventListener('click', () => {
 })
 
 decimalBtn.addEventListener('click', () => {
+    debugger
+    if (calc.equalsPressed) {
+        if (calc.displayValue.includes(".")) {
+            calc.decimalPressed = true
+        } else {
+            calc.displayValue += "."
+        }
+    }
     if (calc.operationPressed) {
         calc.displayValue = "0."
     } else {
         if (!calc.decimalPressed) {
-            calc.displayValue = calc.displayValue + "."
+            calc.displayValue  += "."
             calc.decimalPressed = true
+        } else {
+            calc.displayValue = "0."
         }
     }
     updateDisplays()
