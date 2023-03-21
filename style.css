@@ -60,12 +60,13 @@ button {
 .displays {
     display: grid;
     grid-template-rows: 1fr 2fr;
-    width: 90%;
+    width: 20rem;
     padding: 1.5rem;
 }
 
 .running-total-display {
     min-width: 8rem;
+    max-width: 17rem;
     height: 2rem;
     background: grey;
     place-self: end;
@@ -76,6 +77,7 @@ button {
 
 .main-display {
     width: 100%;
+    max-width: 17rem;
     height: 4rem;
     background: darkgrey;
     margin-top: 1rem;
