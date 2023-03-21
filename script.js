@@ -63,13 +63,14 @@ posNegBtn.addEventListener('click', () => {
     if (calc.get("operationPressed")) {
         calc.set("posNegPressed", true)
     } else {
-        if (!calc.get("posNegPressed")) {
+        if (!calc.get("posNegPressed") && !calc.get("equalsPressed")) {
             calc.set("displayValue", "-" + calc.get("displayValue"))
             calc.set("posNegPressed", true)
             updateDisplays()
         } else {
             calc.set("displayValue", Number(calc.get("displayValue")) * -1)
             calc.set("posNegPressed", false)
+            updateDisplays()
         }
     }
     scaleFontSize()
