@@ -20,7 +20,6 @@ allClearBtn.addEventListener('click', () => {
     setCalcDefault()
     updateDisplays()
     scaleFontSize()
-    console.log("ALL CLEARED")
 })
 
 clearBtn.addEventListener('click', () => {
@@ -31,7 +30,6 @@ clearBtn.addEventListener('click', () => {
     calc.set("equalsPressed", false)
     updateDisplays()
     scaleFontSize()
-    console.log("CLEARED")
 })
 
 equalBtn.addEventListener('click', () => {
@@ -42,7 +40,6 @@ equalBtn.addEventListener('click', () => {
     calc.set("equalsPressed", true)
     updateDisplays()
     scaleFontSize()
-    console.log("EQUALS PRESSED")
 })
 
 decimalBtn.addEventListener('click', () => {
@@ -56,7 +53,6 @@ decimalBtn.addEventListener('click', () => {
     }
     updateDisplays()
     scaleFontSize()
-    console.log("DECIMAL PRESSED")
 })
 
 posNegBtn.addEventListener('click', () => {
@@ -74,7 +70,6 @@ posNegBtn.addEventListener('click', () => {
         updateDisplays()
     }
     scaleFontSize()
-    console.log("POSNEG PRESSED")
 })
 
 function setCalcDefault() {
@@ -123,8 +118,6 @@ function createNumberEventListeners() {
             calc.set("operationPressed", false)
             updateDisplays()
             scaleFontSize()
-            console.log("NUMBER PRESSED")
-            calc.forEach((key, value) => console.log(`${value}, ${key}`))
             for (let i = 0; i < 4; i++) {
                 operationBtns[i].classList.remove('active')
             }
@@ -169,7 +162,6 @@ function createOperationEventListeners() {
             calc.set("operationPressed", true)
             calc.set("posNegPressed", false)
             console.log("OPERATION PRESSED")
-            calc.forEach((key, value) => console.log(`${value}, ${key}`))
             for (let i = 0; i < 4; i++) {
                 operationBtns[i].classList.remove('active')
             }
@@ -238,42 +230,3 @@ module.exports = {
     divide,
     operate
 }
-
-
-// TESTS
-// Simple Addition:
-// 1 + 2 = 3 PASSES
-
-// Decimal displays and saves properly
-// 0.1 + 2 = 2.1 PASSES
-
-// Float imprecision is rounded
-// 0.1 + 0.2 = 0.3 PASSES
-
-// Negative numbers display and save properly
-// -1 + 2 = 1 PASSES
-
-// Multiple digit numbers display and save properly
-// 12 + 31 = 43 PASSES 
-
-// Pressing pos/neg button after operation displays and saves properly
-// 12 + -3 = 9 PASSES
-
-// Pressing pos/neg button after number displays and saves properly
-// 12 + 3(-) = 9 PASSES 
-
-// Decimal pressed after operation displays and saves properly
-// 12 + .3 = 12.3 PASSES 
-
-// Pressing 0 and then decimal also works 
-// 12 + 0.3 = 12.3 PASSES 
-
-// Operations pressed in succession update the saved operation
-// 12 +-x/- 3 = 9 PASSES 
-
-// Multiple operations done before equals displays and updates properly
-// 1 - 2 + 3 = 2 PASSES 
-
-// Operations done after equals keep the running total and update the display properly
-// 1 + 2 = (3) + 5 = 8 PASSES 
-
