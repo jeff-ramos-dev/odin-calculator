@@ -1,3 +1,23 @@
+:root {
+    --body-bg-color: #2f4f4f;
+    --calc-bg-color: #313131;
+    --calc-border-color: grey;
+    --main-display-bg-color: darkgrey;
+    --running-display-bg-color: grey;
+    --display-border-color: black;
+    --display-text-color: black;
+    --number-btn-bg-color: #daae1e;
+    --number-btn-border-color: #7a5e03;
+    --number-btn-text-color: black;
+    --top-btn-bg-color: #2f4f4f;
+    --top-btn-border-color: #4f6f6f;
+    --top-btn-text-color: #ddd;
+    --operation-btn-bg-color: #666;
+    --operation-btn-border-color: #999;
+    --operation-btn-text-color: white;
+    --btn-active-bg-color: #614d0e;
+    --title-text-color: lightgrey;
+}
 * {
     box-sizing: border-box;
 }
@@ -6,7 +26,7 @@ body {
     margin: 0 auto;
     padding: 0;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    background-color:#2f4f4f;
+    background-color: var(--body-bg-color)
 }
 
 header {
@@ -17,7 +37,7 @@ header {
 h1 {
     margin: 1.5rem;
     padding: 0;
-    color: darkgrey;
+    color: var(--title-text-color);
 }
 main {
     display: grid;
@@ -27,25 +47,25 @@ main {
 button {
     height: 3.5rem;
     flex: 1; 
-    color: black;
+    color: var(--number-btn-text-color);
     font-size: 1.5rem;
-    background-color: #daae1e;
+    background-color: var(--number-btn-bg-color);
     border-radius: 10px;
-    border: 2px solid #7a5e03;
+    border: 2px solid var(--number-btn-border-color);
     transition: background-color 300ms ease-out;
 }
 
 .all-clear, .clear, .pos-neg {
-    background-color:#2f4f4f;
-    border: 2px solid #4f6f6f;
-    color: #ddd;
+    background-color: var(--top-btn-bg-color);
+    border: 2px solid var(--top-btn-border-color);
+    color: var(--top-btn-text-color);
 }
 
 .operation,
 .equal {
-    background-color: #666;
-    color: white;
-    border: 2px solid #999;
+    background-color: var(--operation-btn-bg-color);
+    color: var(--operation-btn-text-color);
+    border: 2px solid var(--operation-btn-border-color);
 }
 
 .calculator {
@@ -54,8 +74,12 @@ button {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #313131;
+    background-color: var(--calc-bg-color);
+    margin-top: 2rem;
     padding-bottom: 1rem;
+    border: 4px solid var(--calc-border-color);
+    border-radius: 10px;
+    box-shadow: 8px 8px 8px;
 }
 
 .displays {
@@ -69,22 +93,24 @@ button {
     min-width: 8rem;
     max-width: 17rem;
     height: 2rem;
-    background: grey;
+    background: var(--running-display-bg-color);
     place-self: end;
     text-align: right;
     font-size: 1.5rem;
     padding: 0.1rem 0.5rem;
+    border: 2px solid var(--display-text-color);
 }
 
 .main-display {
     width: 100%;
     max-width: 17rem;
     height: 4rem;
-    background: darkgrey;
+    background: var(--main-display-bg-color);
     margin-top: 1rem;
     text-align: right;
     padding: 0.6rem 0.5rem 0 0.5rem;
     font-size: 2.75rem;
+    border: 2px solid var(--display-border-color);
 }
 
 .buttons {
@@ -97,12 +123,12 @@ button {
 }
 
 button:active {
-    background-color: #614d0e;
+    background-color: var(--btn-active-bg-color);
     transition: background-color 50ms;
 }
 
 .active {
-    background-color: #614d0e;
+    background-color: var(--btn-active-bg-color);
     transition: background-color 50ms;
 }
 
@@ -114,7 +140,7 @@ button:active {
 
 @media (max-width: 1000px) {
     h1 {
-        font-size: 4rem;
+        font-size: 3rem;
     }
     button {
         height: 2.5rem;
