@@ -55,6 +55,7 @@ button {
     justify-content: center;
     align-items: center;
     background-color: #313131;
+    padding-bottom: 1rem;
 }
 
 .displays {
