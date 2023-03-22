@@ -51,14 +51,15 @@ equalBtn.addEventListener('click', () => {
 })
 
 decimalBtn.addEventListener('click', () => {
+    debugger
     if (calc.equalsPressed) {
         if (calc.displayValue.includes(".")) {
             calc.decimalPressed = true
         } else {
             calc.displayValue += "."
+            calc.decimalPressed = true
         }
-    }
-    if (calc.operationPressed) {
+    } else if (calc.operationPressed) {
         calc.displayValue = "0."
     } else {
         if (!calc.decimalPressed) {
@@ -105,6 +106,7 @@ function setCalcDefault() {
 function createNumberEventListeners() {
     for (let i = 0; i <= 9; i++) {
         numberBtns[i].addEventListener('click', (e) => {
+            debugger
             if (calc.displayValue.length >= 9 && !calc.operationPressed) { return }
             if (calc.displayValue === "0" && calc.runningTotal === 0 && !calc.posNegPressed) {
                 calc.displayValue = e.target.textContent
