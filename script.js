@@ -1,3 +1,4 @@
+const calculator = document.querySelector('.calculator')
 const allClearBtn = document.querySelector('.all-clear')
 const clearBtn = document.querySelector('.clear')
 const posNegBtn = document.querySelector('.pos-neg')
@@ -23,6 +24,10 @@ setCalcDefault()
 createNumberEventListeners()
 
 createOperationEventListeners()
+
+calculator.addEventListener('click', (e) => {
+    e.preventDefault()
+})
 
 allClearBtn.addEventListener('click', () => {
     setCalcDefault()
@@ -105,7 +110,6 @@ function setCalcDefault() {
 function createNumberEventListeners() {
     for (let i = 0; i <= 9; i++) {
         numberBtns[i].addEventListener('click', (e) => {
-            debugger
             if (calc.displayValue.length >= 9 && !calc.operationPressed) { return }
             if (calc.displayValue === "0" && calc.runningTotal === 0 && !calc.posNegPressed) {
                 calc.displayValue = e.target.textContent
