@@ -51,7 +51,6 @@ equalBtn.addEventListener('click', () => {
 })
 
 decimalBtn.addEventListener('click', () => {
-    debugger
     if (calc.equalsPressed) {
         if (calc.displayValue.includes(".")) {
             calc.decimalPressed = true
